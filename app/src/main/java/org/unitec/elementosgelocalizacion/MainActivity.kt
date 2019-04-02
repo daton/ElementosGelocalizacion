@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
             var usuario=Usuario()
             var loca=Localizacion();
             usuario.id=999;
-            usuario.nombre="Juan carlos"
+            usuario.nombre="Jc"
           loca.lon=Constantes.milongi
           loca.lat =Constantes.milati
             usuario.localizacion=loca

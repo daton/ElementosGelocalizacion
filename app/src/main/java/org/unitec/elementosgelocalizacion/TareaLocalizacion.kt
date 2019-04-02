@@ -6,8 +6,14 @@ import android.os.AsyncTask
 import android.widget.TextView
 import android.widget.Toast
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.http.*
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestTemplate
+import java.util.*
+import java.util.Collections.singletonList
+
+
+
 
 class TareaLocaliar(private var ctx: Context?, private var usuario:Usuario?,
                           private var activity: MainActivity?)
@@ -41,9 +47,12 @@ class TareaLocaliar(private var ctx: Context?, private var usuario:Usuario?,
             val maper = ObjectMapper()
             //  usuarios = maper.readValue(estring, object : TypeReference<ArrayList<Usuario>>() {})
 
-    val respuesta = restTemplate.postForObject(url,usuario, String::class.java)
+            var requestHeaders = HttpHeaders();
+            requestHeaders.accept = Collections.singletonList(MediaType("application", "json"))
+            var requestEntity =  HttpEntity<Usuario>(usuario,requestHeaders);
+            val respuesta = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String::class.java)
 
-           estatus = maper.readValue(respuesta, Estatus::class.java)
+           estatus = maper.readValue(respuesta.body, Estatus::class.java)
 
 
             println("DESPUES DE REST");
